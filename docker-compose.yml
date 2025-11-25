@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  discord-bot:
+    build: .
+    env_file: .env
+    ports:
+      - "8080:8080"  # 暴露FastAPI端口
+    volumes:
+      # 仅挂日志 & 持久化数据库文件
+      - ./data:/bot/data          # 新建宿主 data/ 目录
+      - ./discord.log:/bot/discord.log
+    restart: unless-stopped
+
+    # Alternatively you can set the environment variables as such:
+    # /!\ The token shouldn't be written here, as this file is not ignored from Git /!
+    # environment:
+    #   - PREFIX=YOUR_BOT_PREFIX_HERE
+    #   - INVITE_LINK=YOUR_BOT_INVITE_LINK_HERE
